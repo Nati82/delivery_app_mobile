@@ -1,38 +1,23 @@
 import React from "react";
-import { Card } from "react-native-paper";
-import { SvgXml } from "react-native-svg";
-import styled from "styled-components/native";
 
-import star from "../../../../assets/star";
-
-const RestaurantCard = styled(Card)`
-  background-color: ${(props) => props.theme.colors.bg.primary};
-`;
-
-const RestaurantCardCover = styled(Card.Cover)`
-  padding: ${(props) => props.theme.space[3]};
-  background-color: ${(props) => props.theme.colors.bg.primary};
-`;
-
-const Info = styled.View`
-  padding: ${(props) => props.theme.space[3]};
-`;
-
-const Title = styled.Text`
-  font-family: ${(props) => props.theme.fonts.body};
-  font-size: ${(props) => props.theme.fontSizes.title};
-  color: ${(props) => props.theme.colors.ui.primary};
-`;
-
-const Address = styled.Text`
-  font-family: ${(props) => props.theme.fonts.body};
-  font-size: ${(props) => props.theme.fontSizes.caption};
-  color: ${(props) => props.theme.colors.ui.primary};
-`;
+import { Spacer } from "../../../components/spacer/spacer.component";
+import { Text } from "../../../components/typography/text.component";
+import {
+  RestaurantCard,
+  RestaurantCardCover,
+  Info,
+  Section,
+  SectionEnd,
+  Rating,
+  Closed,
+  Address,
+  Food,
+  Star,
+} from "./restaurant-info-card.styles";
 
 export const RestaurantInfoCard = ({ restaurant = {} }) => {
   const {
-    name = "name",
+    name = "Some Restaurant",
     icon,
     photos = [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjdnNlFpQRO9IlqpMRTEXsJMtmeL0lcwtiiw&usqp=CAU",
@@ -40,15 +25,29 @@ export const RestaurantInfoCard = ({ restaurant = {} }) => {
     address = "address",
     rating = 5,
     isOpenNow = true,
-    isClosedTemporarily = false,
+    isClosedTemporarily = true,
   } = restaurant;
+
+  const ratingArray = Array.from(new Array(Math.floor(rating)));
 
   return (
     <RestaurantCard elevation={5}>
       <RestaurantCardCover key={name} source={{ uri: photos[0] }} />
       <Info>
-        <Title>{name}</Title>
-        <SvgXml xml={star} width={20} height={20} />
+        <Text variant="label">{name}</Text>
+        <Section>
+          <Rating>
+            {ratingArray.map((rating, index) => (
+              <Star key={index} icon="star" color="#fcdb03" />
+            ))}
+          </Rating>
+          <SectionEnd>
+            <Spacer>
+              {isClosedTemporarily && <Closed>Closed Temporarily</Closed>}
+            </Spacer>
+            <Spacer>{isOpenNow && <Food icon="food" />}</Spacer>
+          </SectionEnd>
+        </Section>
         <Address>{address}</Address>
       </Info>
     </RestaurantCard>
