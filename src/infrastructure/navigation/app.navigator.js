@@ -7,7 +7,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 import { SafeArea } from "../../components/utilities/safe-area.component";
 
-import { RestaurantScreen } from "../../features/restaurants/screens/restaurants.screen";
+import { RestaurantNavigator } from "./restaurant.navigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -33,7 +33,7 @@ export const AppNavigator = () => {
       >
         <Tab.Screen
           name="Restaurants"
-          component={RestaurantScreen}
+          component={RestaurantNavigator}
           options={{
             tabBarLabel: "Restaurants",
             tabBarIcon: ({ color }) => (
